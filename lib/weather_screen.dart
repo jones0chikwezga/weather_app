@@ -1,7 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:weather_app/additional_infor.dart';
+import 'package:weather_app/hourly_forecast_item.dart';
 
 class WeatherScreen extends StatelessWidget {
+ 
   const WeatherScreen({super.key});
 
   @override
@@ -44,7 +47,7 @@ class WeatherScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            "300°F",
+                            "300K",
                             style: TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
@@ -75,31 +78,75 @@ class WeatherScreen extends StatelessWidget {
             ),
          
             const SizedBox(height: 12),
-            SingleChildScrollView(
+           const SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
                   
-                     HourlyForecastItem(),
-                     HourlyForecastItem(),
-                     HourlyForecastItem(),
-                     HourlyForecastItem(),
-                     HourlyForecastItem(),
+                     HourlyForecastItem(
+                      time:"00:12",
+                      icon: Icons.cloud,
+                      temperature: "300",
+                     ),
+                     HourlyForecastItem(
+                      time:"01:00",
+                      icon: Icons.sunny,
+                      temperature: "303.12",
+                     ),
+                     HourlyForecastItem(
+                      time:"12:12",
+                      icon: Icons.cloud,
+                      temperature: "310.34",
+                     ),
+                     HourlyForecastItem(
+                      time:"00:00",
+                      icon: Icons.cloud,
+                      temperature: "310.90",
+                     ),
+                     HourlyForecastItem(
+                      time:"30:12",
+                      icon: Icons.sunny,
+                      temperature: "300.9",
+                     ),
                 ],
               ),
             ),
 
             // Weather forecast cards
-            const Placeholder(
-              fallbackHeight: 150,
-            ),
+           
 
             const SizedBox(height: 16),
 
             // Additional information
-            const Placeholder(
-              fallbackHeight: 150,
+           const Text(
+              "Addition Information",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
+             const SizedBox(height: 8),
+            const  Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                AdditionalInforItem(
+                  icon: Icons.water_drop,
+                  label: 'Humidity',
+                  value: '91',
+                ),
+                AdditionalInforItem(
+                   icon: Icons.air,
+                  label: 'Wind Spead',
+                  value: '3.4',
+                ),
+                AdditionalInforItem(
+                   icon: Icons.beach_access,
+                  label: 'Pressure',
+                  value: '1000',
+                ),
+              ],
+             )
+
 
             
           ],
@@ -108,34 +155,5 @@ class WeatherScreen extends StatelessWidget {
     );
   }
 }
-class HourlyForecastItem extends StatelessWidget {
-  const HourlyForecastItem({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-                      elevation: 6,
-                      child: Container(
-                       width: 100,
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Column(
-                          children: [
-                            Text("03:00", style: TextStyle
-                            (fontSize: 16,fontWeight:FontWeight.bold
-                            ),
-                            ),
-                             SizedBox(height: 8),
-                            Icon(Icons.cloud, size:32),
-                            SizedBox(height: 8),
-                             Text("320.12", 
-                            ),
-                          ],
-                          
-                        ),
-                      ),
-                    );
-  }
-}
+
