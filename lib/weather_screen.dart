@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/additional_infor.dart';
 import 'package:weather_app/hourly_forecast_item.dart';
 import 'package:http/http.dart' as http;
@@ -53,7 +54,11 @@ return data;
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                
+              });
+            },
             icon: const Icon(Icons.refresh),
           )
         ],
@@ -135,26 +140,44 @@ return data;
               ),
            
               const SizedBox(height: 12),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    for(int i=0; i<5 ; i++)
-                       HourlyForecastItem(
-                        time:data['list'][i + 1]['dt'].toString(),
-                        icon: data['list'][i + 1]['weather'][0]['main'] == 'Clouds' || 
-                        data['list'][i + 1]['weather'][0]['main'] == 'Rain' ? 
-                        Icons.cloud: Icons.sunny,
-                        temperature:data['list'][i + 1]['main']['temp'].toString(),
-                       ),
+              // SingleChildScrollView(
+              //   scrollDirection: Axis.horizontal,
+              //   child: Row(
+              //     children: [
+              //       for(int i=0; i<5 ; i++)
+              //          HourlyForecastItem(
+              //           time:data['list'][i + 1]['dt'].toString(),
+              //           icon: data['list'][i + 1]['weather'][0]['main'] == 'Clouds' || 
+              //           data['list'][i + 1]['weather'][0]['main'] == 'Rain' ? 
+              //           Icons.cloud: Icons.sunny,
+              //           temperature:data['list'][i + 1]['main']['temp'].toString(),
+              //          ),
                       
-                  ],
-                ),
-              ),
+              //     ],
+              //   ),
+              // ),
         
               // Weather forecast cards
-             
-        
+             SizedBox(
+              height: 120,
+               child: ListView.builder(
+                itemCount: 5,
+                scrollDirection: Axis.horizontal,
+                itemBuilder:(context, index){
+                final hourlyForecast = data['list'][index + 1];
+                final hourlySky = data['list'][index + 1]['weather'][0]['main'];
+                final hourlytemp = hourlyForecast  ['main']['temp'].toString();
+                final hourlyTim=DateTime.parse(hourlyForecast  ['dt_txt'].toString());
+                  return HourlyForecastItem(
+                    time: DateFormat.Hm().format(hourlyTim),
+                    temperature:hourlytemp,
+                    icon: hourlySky == 'Clouds' || 
+                         hourlySky == 'Rain' ?  
+                          Icons.cloud: Icons.sunny,
+                );
+                },
+               ),
+             ),
               const SizedBox(height: 16),
         
               // Additional information
